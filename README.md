@@ -19,8 +19,8 @@ To run the project, you need the following tools:
 First, clone the project repository:
 
 ```bash
-git clone https://github.com/your-username/project-name.git
-cd project-name
+git clone https://github.com/somealeksandr/finance-management
+cd finance-management
 ```
 
 ### 2. Install dependencies
@@ -82,6 +82,37 @@ The application will be accessible at `http://localhost:8000`.
 - `GET /api/transactions`: Return all transactions with pagination.
 - `GET /api/users/{user}/transactions`: Return user transactions with pagination.
 - `GET /api/users/{user}/balance`: Return balance user.
+
+## Email Server Setup
+
+### For testing email notifications, you can use MailHog or Mailtrap.
+
+### 1. MailHog:
+###  * Configure your .env file for MailHog:
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
+### * Run MailHog:
+```bash
+mailhog
+```
+### Emails will be accessible at http://localhost:8025.
+
+### 2. Mailtrap:
+### Set up your Mailtrap account and use the provided SMTP settings in .env:
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+MAIL_ENCRYPTION=null
+```
 
 ## Running Tests
 
