@@ -25,9 +25,20 @@ class StoreTransactionRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'amount' => 'required|numeric|min:0.01',
+            'amount' => 'required|numeric|min:0.01|max:99999999.99',
             'type' => ['required', new Enum(TransactionType::class)],
             'description' => 'nullable|string',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function messages(): array
+    {
+        return [
+            'amount.max' => 'The amount exceeds the allowed limit.',
+            'amount.numeric' => 'The amount must be a valid number.',
         ];
     }
 }
