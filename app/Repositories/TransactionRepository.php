@@ -4,13 +4,15 @@ namespace App\Repositories;
 
 use App\Http\Requests\TransactionFilterRequest;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
+use App\Traits\CalculatesBalance;
 use App\Traits\FilterableTransactions;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TransactionRepository extends BaseRepository implements TransactionRepositoryInterface
 {
-    use FilterableTransactions;
+    use FilterableTransactions, CalculatesBalance;
 
     /**
      * @param Transaction $model
@@ -26,7 +28,14 @@ class TransactionRepository extends BaseRepository implements TransactionReposit
      */
     public function create(array $payload): Transaction
     {
-        return Transaction::create($payload);
+        $transaction = Transaction::create($payload);
+
+        $user = User::find($payload['user_id']);
+        if ($user) {
+            $this->calculateBalanceUser($user);
+        }
+
+        return $transaction;
     }
 
     /**

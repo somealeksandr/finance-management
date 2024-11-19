@@ -28,14 +28,7 @@ class TransactionService implements TransactionServiceInterface
      */
     public function createTransaction(array $payload): Transaction
     {
-        $transaction =  $this->transactionRepository->create($payload);
-
-        $user = User::find($payload['user_id']);
-        if ($user) {
-            $this->calculateBalanceUser($user);
-        }
-
-        return $transaction;
+        return $this->transactionRepository->create($payload);
     }
 
     /**
